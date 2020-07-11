@@ -24,7 +24,6 @@ function setup(){
         playerCountRef.on("value", (data) => {
             index = data.val();
         })
-        getCount();
         push();
         fill("white");
         container = rect(1450, 50, 50, 400);
@@ -67,8 +66,6 @@ function setup(){
 function draw(){
     background("white");
 
-    
-    
     fill("blue");
     smallPointContainer.display();
 
@@ -82,8 +79,6 @@ function draw(){
     largePointContainer.display();
    
     OrangeContainer.display();
-
-
     
     fill("red");
     RedContainer.display();
@@ -116,7 +111,7 @@ function draw(){
     }*/
     getCount();
     ArrayRef();
-    if(index != 0 && !(mouseIsPressed)){
+    if(index !== 0){
         //console.log(allArray);
         for(var i in allArray){
             //console.log(allArray[i].x);
@@ -129,14 +124,12 @@ function draw(){
         count(index);
         getCount();*/
         }
-        //updateStart(0);
-        Start = 0;
-    }
-    if(Start === 0){
         for(var i = 0; i < array.length; i++){
             //fill(colorPen);
             array[i].display();
         }
+        //updateStart(0);
+        Start = 0;
     }
 
 
@@ -151,7 +144,7 @@ function draw(){
         mouseClick(RedContainer, Initialwidth, "red");
         mouseClick(OrangeContainer, Initialwidth, "orange");
         mouseClick(DarkGreen, Initialwidth, "#009900");
-        mouseClick(LightGreen, Initialwidth, "#00500");
+        mouseClick(LightGreen, Initialwidth, "#005500");
         mouseClick(DarkBlue, Initialwidth, "#000099");
         mouseClick(LightBlue, Initialwidth, "#000050");
         
@@ -159,10 +152,11 @@ function draw(){
     if(mouseIsPressed && mouseX < 1400){
         SetArrayPen();
         console.log('mosuePressed in canvas')
-        ArrayRef();
+        //ArrayRef();
         index+=1;
         count(index);
         getCount();
+       
         
         
         //console.log(array);
