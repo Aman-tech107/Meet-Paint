@@ -25,32 +25,76 @@ function setup(){
             index = data.val();
         })
         getCount();
+        push();
+        fill("white");
+        container = rect(1450, 50, 50, 400);
+        console.log(colorPen);
+        
+        
+        smallPointContainer = new PenSizeContainer(1450, 50, 50, 30);
+    
+        
+        mediumPointContainer = new PenSizeContainer(1450, 80, 50, 30);
+    
+        
+        SecondPointContainer = new PenSizeContainer(1450, 110, 50, 30);
+    
+        
+        largePointContainer = new PenSizeContainer(1450, 140, 50, 30);
+        OrangeContainer = new ColorContainer(1475, 170, 25, 25);
+    
+        pop();
+        
+        push();
+      
+        RedContainer = new ColorContainer(1450, 170, 25, 25);
+       
+        pop();
+        
+        LightGreen = new ColorContainer(1450, 195, 25, 25);
+       
+        
+        DarkGreen = new ColorContainer(1475, 195, 25, 25);
+        
+      
+        LightBlue = new ColorContainer(1450, 220, 25, 25);
+       
+        
+        DarkBlue = new ColorContainer(1475, 220, 25, 25);
+     
 }
 
 function draw(){
     background("white");
-    push();
-    fill("white");
-    container = rect(1450, 50, 50, 400);
 
     
+    
     fill("blue");
-    smallPointContainer = new PenSizeContainer(1450, 50, 50, 30);
     smallPointContainer.display();
 
     fill("Red");
-    mediumPointContainer = new PenSizeContainer(1450, 80, 50, 30);
     mediumPointContainer.display();
 
     fill("violet");
-    SecondPointContainer = new PenSizeContainer(1450, 110, 50, 30);
     SecondPointContainer.display();
 
     fill("Orange");
-    largePointContainer = new PenSizeContainer(1450, 140, 50, 30);
     largePointContainer.display();
-    OrangeContainer = new ColorContainer(1475, 170, 25, 25);
+   
     OrangeContainer.display();
+
+
+    
+    fill("red");
+    RedContainer.display();
+    fill("#005000");
+    LightGreen.display();
+    fill("#009900");
+    DarkGreen.display();
+    fill("#000050");
+    LightBlue.display();
+    fill("#000099");
+    DarkBlue.display();
 
     fill("Yellow");
     textSize(18);
@@ -61,26 +105,6 @@ function draw(){
     text("2x Medium", 1451.5, 130);
     textSize(12);
     text("Large", 1458, 160);
-
-    pop();
-    
-    push();
-    fill("red");
-    RedContainer = new ColorContainer(1450, 170, 25, 25);
-    RedContainer.display();
-    pop();
-    fill("#005000");
-    LightGreen = new ColorContainer(1450, 195, 25, 25);
-    LightGreen.display();
-    fill("#009900");
-    DarkGreen = new ColorContainer(1475, 195, 25, 25);
-    DarkGreen.display();
-    fill("#000050");
-    LightBlue = new ColorContainer(1450, 220, 25, 25);
-    LightBlue.display();
-    fill("000099");
-    DarkBlue = new ColorContainer(1475, 220, 25, 25);
-    DarkBlue.display();
     //smallPoint = rect(1460, 60, 2, 2);
     /*if(mousePressedOver(smallPointContainer)){
         Initialwidth = 15;
@@ -92,19 +116,21 @@ function draw(){
     }*/
     getCount();
     ArrayRef();
-    if(index != 0 && !(mouseDown())){
+    if(index != 0 && !(mouseIsPressed)){
         //console.log(allArray);
         for(var i in allArray){
             //console.log(allArray[i].x);
             //point.x = allArray[index].x = mouseX;
             point = new Pen(allArray[i].x, allArray[i].y , allArray[i].width,allArray[i].width, allArray[i].color);
+            //console.log(allArray[i].color);
             array.push(point);
             //console.log("Draw stored stokes");
             /*index+=1;
         count(index);
         getCount();*/
         }
-        updateStart(0);
+        //updateStart(0);
+        Start = 0;
     }
     if(Start === 0){
         for(var i = 0; i < array.length; i++){
@@ -114,14 +140,14 @@ function draw(){
     }
 
 
-    if(mouseDown() && mouseX > 1400){
+    if(mouseIsPressed && mouseX > 1400){
         //for(var i = 0; i < 2; i++){
         //array.push(mouseX);
         mouseClick(smallPointContainer, 10, colorPen)
         mouseClick(mediumPointContainer, 25, colorPen);
         mouseClick(SecondPointContainer, 50, colorPen);
         mouseClick(largePointContainer, 75, colorPen);
-        console.log("x : " + mouseX + " " + "y : " + mouseY)
+        
         mouseClick(RedContainer, Initialwidth, "red");
         mouseClick(OrangeContainer, Initialwidth, "orange");
         mouseClick(DarkGreen, Initialwidth, "#009900");
@@ -130,8 +156,9 @@ function draw(){
         mouseClick(LightBlue, Initialwidth, "#000050");
         
     }
-    if(mouseDown() && mouseX < 1400){
+    if(mouseIsPressed && mouseX < 1400){
         SetArrayPen();
+        console.log('mosuePressed in canvas')
         ArrayRef();
         index+=1;
         count(index);
@@ -142,7 +169,8 @@ function draw(){
         //pointsarray.push(new Pen(mouseX, mouseY, 1, 1));
         //pointsarray[pointsarray.length.display];
         
-        updateStart(0);
+        //updateStart(0);
+        Start = 0;
         //console.log(updateStart.start);
     }
     
@@ -153,6 +181,7 @@ function mouseClick(object, width, Color) {
     && mouseY > object.y && mouseY < (object.y + object.height)){
         Initialwidth = width;
         Initialheight = Initialwidth;
+       
         colorPen = Color;
     }
 }
@@ -170,23 +199,23 @@ function SetArrayPen(){
         x: mouseX,
         y: mouseY,
         width: Initialwidth,
-        color: PenColor
+        color: colorPen
     });
 }
 
-function StartRef(){
+/*function StartRef(){
     var startRef = database.ref('Start');
     startRef.on("value", (data) => {
         Start = data.val();
     })
-}
+}*/
 
-function updateStart(start){
+/*function updateStart(start){
     database.ref('/').update({
         Start: start
     })
     Start = start;
-}
+}*/
 
 function getCount(){
     var playerCountRef = database.ref("Index");
